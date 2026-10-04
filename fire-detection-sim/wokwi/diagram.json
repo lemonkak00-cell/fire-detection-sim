@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "author": "Fire detection simulation team",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-gas-sensor", "id": "gas1", "top": -130, "left": -230, "attrs": {} },
+    { "type": "wokwi-flame-sensor", "id": "flame1", "top": 40, "left": -230, "attrs": {} },
+    { "type": "wokwi-buzzer", "id": "bz1", "top": -110, "left": 230, "attrs": { "volume": "0.1" } },
+    { "type": "wokwi-led", "id": "ledPump", "top": -10, "left": 250, "attrs": { "color": "blue", "label": "PUMP" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": 40, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-led", "id": "ledSiren", "top": 90, "left": 250, "attrs": { "color": "red", "label": "SIREN" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": 140, "left": 250, "attrs": { "value": "220" } },
+    { "type": "wokwi-pushbutton", "id": "btnReset", "top": 200, "left": -150, "attrs": { "color": "green", "label": "RESET" } },
+    { "type": "wokwi-pushbutton", "id": "btnNet", "top": 270, "left": -150, "attrs": { "color": "yellow", "label": "NET CUT" } }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+
+    [ "gas1:VCC", "esp:3V3", "red", [] ],
+    [ "gas1:GND", "esp:GND.1", "black", [] ],
+    [ "gas1:AOUT", "esp:D34", "green", [] ],
+
+    [ "flame1:VCC", "esp:3V3", "red", [] ],
+    [ "flame1:GND", "esp:GND.1", "black", [] ],
+    [ "flame1:AOUT", "esp:D35", "orange", [] ],
+
+    [ "bz1:1", "esp:GND.1", "black", [] ],
+    [ "bz1:2", "esp:D25", "purple", [] ],
+
+    [ "esp:D26", "r1:1", "blue", [] ],
+    [ "r1:2", "ledPump:A", "blue", [] ],
+    [ "ledPump:C", "esp:GND.1", "black", [] ],
+
+    [ "esp:D13", "r2:1", "red", [] ],
+    [ "r2:2", "ledSiren:A", "red", [] ],
+    [ "ledSiren:C", "esp:GND.1", "black", [] ],
+
+    [ "btnReset:1.l", "esp:D27", "green", [] ],
+    [ "btnReset:2.l", "esp:GND.1", "black", [] ],
+
+    [ "btnNet:1.l", "esp:D14", "yellow", [] ],
+    [ "btnNet:2.l", "esp:GND.1", "black", [] ]
+  ],
+  "dependencies": {}
+}
